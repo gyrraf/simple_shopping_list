@@ -21,10 +21,20 @@ class _HomePageState extends State<HomePage> {
         ..._items,
         (
           name: "Item ${_items.length + 1}",
-          amountString: null,
+          amountString: "${_items.length + 1} pcs",
           purchaseNecessary: false,
         ),
       ];
+    });
+  }
+
+  void _onItemChanged(bool value, int index, Item item) {
+    setState(() {
+      _items[index] = (
+        name: item.name,
+        amountString: item.amountString,
+        purchaseNecessary: value,
+      );
     });
   }
 
@@ -35,7 +45,9 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(child: HomeList(list: _items)),
+      body: Center(
+        child: HomeList(list: _items, onItemChanged: _onItemChanged),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addItem,
         tooltip: 'Add', // TODO: translate text
