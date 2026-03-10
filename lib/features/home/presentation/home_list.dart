@@ -2,13 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:simple_shopping_list/features/home/data/item.dart';
 import 'package:simple_shopping_list/features/home/presentation/home_item.dart';
 
-typedef ItemChanged = void Function(bool value, int index, Item item);
+typedef ItemClick = void Function(int index, Item item);
+typedef ItemCheckedChanged = void Function(bool newValue, int index, Item item);
 
 class HomeList extends StatelessWidget {
-  const HomeList({super.key, required this.list, required this.onItemChanged});
+  const HomeList({
+    super.key,
+    required this.list,
+    required this.onItemClick,
+    required this.onItemCheckedChanged,
+  });
 
   final List<Item> list;
-  final ItemChanged onItemChanged;
+  final ItemClick onItemClick;
+  final ItemCheckedChanged onItemCheckedChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +25,11 @@ class HomeList extends StatelessWidget {
         final item = list[index];
         return HomeItem(
           item: item,
-          onChanged: (value) {
-            onItemChanged(value, index, item);
+          onClick: () {
+            onItemClick(index, item);
+          },
+          onCheckedChanged: (newValue) {
+            onItemCheckedChanged(newValue, index, item);
           },
         );
       },

@@ -28,7 +28,11 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _onItemChanged(bool value, int index, Item item) {
+  void _onItemClick(int index, Item item) {
+    // TODO: implement
+  }
+
+  void _onItemCheckedChanged(bool value, int index, Item item) {
     setState(() {
       _items[index] = (
         name: item.name,
@@ -46,7 +50,11 @@ class _HomePageState extends State<HomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: HomeList(list: _items, onItemChanged: _onItemChanged),
+        child: HomeList(
+          list: _items,
+          onItemClick: _onItemClick,
+          onItemCheckedChanged: _onItemCheckedChanged,
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addItem,

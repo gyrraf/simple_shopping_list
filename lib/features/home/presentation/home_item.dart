@@ -2,27 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:simple_shopping_list/features/home/data/item.dart';
 
 class HomeItem extends StatelessWidget {
-  const HomeItem({super.key, required this.item, required this.onChanged});
+  const HomeItem({
+    super.key,
+    required this.item,
+    required this.onClick,
+    required this.onCheckedChanged,
+  });
 
   final Item item;
-  final ValueChanged<bool> onChanged;
-
-  void _onClick() {
-    onChanged(!item.purchaseNecessary);
-  }
+  final VoidCallback onClick;
+  final ValueChanged<bool> onCheckedChanged;
 
   @override
   Widget build(BuildContext context) {
     final amountString = item.amountString;
     return GestureDetector(
-      onTap: _onClick,
+      onTap: onClick,
       child: Row(
         children: [
-          IgnorePointer(
-            child: Checkbox(
-              value: item.purchaseNecessary,
-              onChanged: (newValue) {},
-            ),
+          Checkbox(
+            value: item.purchaseNecessary,
+            onChanged: (newValue) {
+              onCheckedChanged(newValue ?? false);
+            },
           ),
           Column(
             children: [
