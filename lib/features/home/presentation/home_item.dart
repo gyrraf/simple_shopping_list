@@ -18,21 +18,40 @@ class HomeItem extends StatelessWidget {
     final amountString = item.amountString;
     return GestureDetector(
       onTap: onClick,
-      child: Row(
-        children: [
-          Checkbox(
-            value: item.purchaseNecessary,
-            onChanged: (newValue) {
-              onCheckedChanged(newValue ?? false);
-            },
-          ),
-          Column(
-            children: [
-              Text(item.name),
-              if (amountString != null) Text(amountString),
-            ],
-          ),
-        ],
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        child: Row(
+          spacing: 8.0,
+          children: [
+            Checkbox(
+              value: item.purchaseNecessary,
+              onChanged: (newValue) {
+                onCheckedChanged(newValue ?? false);
+              },
+            ),
+            Expanded(
+              child: Column(
+                spacing: 2.0,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item.name,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    textAlign: TextAlign.start,
+                  ),
+                  if (amountString != null)
+                    Text(
+                      amountString,
+                      style: Theme.of(context).textTheme.bodySmall,
+                      textAlign: TextAlign.start,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
