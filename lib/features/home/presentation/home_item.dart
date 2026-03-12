@@ -16,7 +16,7 @@ class HomeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final amountString = item.amountString;
-    return GestureDetector(
+    return InkWell(
       onTap: onClick,
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
