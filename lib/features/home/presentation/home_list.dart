@@ -21,7 +21,8 @@ class HomeList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       itemCount: list.length,
-      separatorBuilder: (BuildContext context, int index) => const Divider(),
+      separatorBuilder: (BuildContext context, int index) =>
+          Divider(height: Theme.of(context).dividerTheme.thickness ?? 1.0),
       itemBuilder: (BuildContext context, int index) {
         final item = list[index];
         return HomeItem(
