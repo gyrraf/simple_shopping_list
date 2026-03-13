@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_shopping_list/features/home/data/item.dart';
 import 'package:simple_shopping_list/features/home/presentation/home_item.dart';
+import 'package:simple_shopping_list/widgets/gapless_divider.dart';
 
 typedef ItemClick = void Function(int index, Item item);
 typedef ItemCheckedChanged = void Function(bool newValue, int index, Item item);
@@ -21,8 +22,7 @@ class HomeList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       itemCount: list.length,
-      separatorBuilder: (BuildContext context, int index) =>
-          Divider(height: Theme.of(context).dividerTheme.thickness ?? 1.0),
+      separatorBuilder: (BuildContext context, int index) => GaplessDivider(),
       itemBuilder: (BuildContext context, int index) {
         final item = list[index];
         return HomeItem(
