@@ -31,7 +31,7 @@ class HomeItem extends StatelessWidget {
           spacing: dimensions.itemInnerSpacingHorizontal,
           children: [
             Checkbox(
-              value: item.purchaseNecessary,
+              value: !item.purchaseNecessary,
               onChanged: (newValue) {
                 onCheckedChanged(newValue ?? false);
               },
