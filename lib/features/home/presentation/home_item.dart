@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_shopping_list/core/theme/home_dimensions.dart';
 import 'package:simple_shopping_list/features/home/data/item.dart';
 
 class HomeItem extends StatelessWidget {
@@ -15,13 +16,19 @@ class HomeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = context.homeDimensions;
+
     final amountString = item.amountString;
+
     return InkWell(
       onTap: onClick,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        padding: EdgeInsets.symmetric(
+          vertical: dimensions.itemPaddingVertical,
+          horizontal: dimensions.itemPaddingHorizontal,
+        ),
         child: Row(
-          spacing: 8.0,
+          spacing: dimensions.itemInnerSpacingHorizontal,
           children: [
             Checkbox(
               value: item.purchaseNecessary,
@@ -31,7 +38,7 @@ class HomeItem extends StatelessWidget {
             ),
             Expanded(
               child: Column(
-                spacing: 2.0,
+                spacing: dimensions.itemInnerSpacingTextVertical,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
