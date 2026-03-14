@@ -33,7 +33,7 @@ class HomeItem extends StatelessWidget {
             Checkbox(
               value: !item.purchaseNecessary,
               onChanged: (newValue) {
-                onCheckedChanged(newValue ?? false);
+                onCheckedChanged(!(newValue ?? false));
               },
             ),
             Expanded(
