@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
         (
           name: "Item ${_items.length + 1}",
           amountString: "${_items.length + 1} pcs",
-          purchaseNecessary: false,
+          purchaseNecessary: true,
         ),
       ];
     });
