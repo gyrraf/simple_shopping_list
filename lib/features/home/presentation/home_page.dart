@@ -2,6 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:simple_shopping_list/features/home/data/item.dart';
 import 'package:simple_shopping_list/features/home/presentation/home_list.dart';
 
+enum _Tab {
+  todo(label: "Einkaufen"),
+  all(label: "Alle");
+
+  const _Tab({required this.label});
+
+  final String label; // TODO: this label should be language dependent.
+
+  bool isItemIncluded(Item item) {
+    switch (this) {
+      case todo:
+        return item.purchaseNecessary;
+      case all:
+        return true;
+    }
+  }
+}
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
 
@@ -44,22 +62,36 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: HomeList(
-          list: _items,
-          onItemClick: _onItemClick,
-          onItemCheckedChanged: _onItemCheckedChanged,
+    final tabValues = _Tab.values;
+
+    return DefaultTabController(
+      length: tabValues.length,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Text(widget.title),
+          bottom: TabBar(
+            tabs: tabValues.map((tab) => Tab(text: tab.label)).toList(),
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addItem,
-        tooltip: 'Add', // TODO: translate text
-        child: const Icon(Icons.add),
+        body: TabBarView(
+          children: tabValues
+              .map(
+                (tab) => Center(
+                  child: HomeList(
+                    list: _items.where(tab.isItemIncluded).toList(),
+                    onItemClick: _onItemClick,
+                    onItemCheckedChanged: _onItemCheckedChanged,
+                  ),
+                ),
+              )
+              .toList(),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _addItem,
+          tooltip: 'Add', // TODO: translate text
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }
