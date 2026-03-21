@@ -74,6 +74,7 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
           bottom: TabBar(
+            indicatorSize: TabBarIndicatorSize.tab,
             tabs: tabValues.map((tab) => Tab(text: tab.label)).toList(),
           ),
         ),
