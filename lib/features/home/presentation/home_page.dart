@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_shopping_list/features/edit/presentation/edit_dialog.dart';
 import 'package:simple_shopping_list/features/home/data/item.dart';
 import 'package:simple_shopping_list/features/home/presentation/home_list.dart';
 
@@ -48,10 +49,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _onItemClick(int index, Item item) {
-    // TODO: implement
-  }
-
   void _onItemCheckedChanged(bool value, int index, Item item) {
     setState(() {
       _items[index] = (
@@ -85,7 +82,17 @@ class _HomePageState extends State<HomePage> {
                   key: Key("HomePageContent: ${tab.index}"),
                   allItems: _items,
                   selectedTab: tab,
-                  onItemClick: _onItemClick,
+                  onItemClick: (int index, Item item) => showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return EditDialog(
+                        item: item,
+                        onCancelClick: () {
+                          Navigator.of(context).pop();
+                        },
+                      );
+                    },
+                  ),
                   onItemCheckedChanged: _onItemCheckedChanged,
                 ),
               )
