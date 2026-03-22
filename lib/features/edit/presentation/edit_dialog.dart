@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_shopping_list/core/theme/edit_dimensions.dart';
 import 'package:simple_shopping_list/features/home/data/item.dart';
 
 class EditDialog extends StatefulWidget {
@@ -47,17 +48,19 @@ class _EditDialogState extends State<EditDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final dimensions = context.editDimensions;
+
     return Dialog(
-      constraints: BoxConstraints(minWidth: 0.0, maxWidth: 600.0),
+      constraints: BoxConstraints(maxWidth: dimensions.dialogMaxWidth),
       child: Padding(
-        padding: EdgeInsetsGeometry.symmetric(vertical: 32.0, horizontal: 32.0),
+        padding: EdgeInsetsGeometry.all(dimensions.dialogPadding),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
-          spacing: 32.0,
+          spacing: dimensions.verticalLayoutSpacing,
           children: [
             Column(
-              spacing: 8.0,
+              spacing: dimensions.verticalSpacingInputs,
               children: [
                 TextField(
                   controller: _nameInputController,
@@ -87,7 +90,7 @@ class _EditDialogState extends State<EditDialog> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              spacing: 8.0,
+              spacing: dimensions.horizontalSpacingButtons,
               children: [
                 TextButton(
                   onPressed: widget.onCancelClick,
