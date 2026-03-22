@@ -28,7 +28,7 @@ class _EditDialogState extends State<EditDialog> {
   @override
   void initState() {
     super.initState();
-    _isSaveEnabled = widget.item?.name?.isNotEmpty ?? false;
+    _isSaveEnabled = widget.item?.name.isNotEmpty ?? false;
 
     _nameInputController = TextEditingController(text: widget.item?.name);
     _nameInputController.addListener(_onNameChanged);
