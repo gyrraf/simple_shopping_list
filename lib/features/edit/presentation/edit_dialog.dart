@@ -34,7 +34,7 @@ class _EditDialogState extends State<EditDialog> {
   }
 
   void _saveClicked() {
-    final Item newItem = (
+    final newItem = (
       id: widget.item!.id, // FIXME: allow creation of completely new items.
       name: _nameInputController.text,
       purchaseNecessary: widget.item?.purchaseNecessary ?? false,
