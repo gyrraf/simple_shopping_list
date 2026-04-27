@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:simple_shopping_list/core/theme/edit_dimensions.dart';
 import 'package:simple_shopping_list/features/home/data/item.dart';
 
+typedef SaveCallback = void Function(Item newItem);
+
 class EditDialog extends StatefulWidget {
   // TODO: maybe I should use a different type of variable for this?
   final Item? item;
   final VoidCallback onCancelClick;
+  final SaveCallback onSaveClick;
 
-  const EditDialog({super.key, this.item, required this.onCancelClick});
+  const EditDialog({
+    super.key,
+    this.item,
+    required this.onCancelClick,
+    required this.onSaveClick,
+  });
 
   @override
   State<EditDialog> createState() => _EditDialogState();
@@ -24,7 +32,15 @@ class _EditDialogState extends State<EditDialog> {
     });
   }
 
-  void _saveClicked() {}
+  void _saveClicked() {
+    final Item newItem = (
+      id: widget.item!.id, // FIXME: allow creation of completely new items.
+      name: _nameInputController.text,
+      purchaseNecessary: widget.item?.purchaseNecessary ?? false,
+      amountString: _amountInputController.text,
+    );
+    widget.onSaveClick(newItem);
+  }
 
   @override
   void initState() {

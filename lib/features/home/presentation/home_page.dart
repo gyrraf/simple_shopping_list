@@ -60,6 +60,19 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _onSaveUpdatedItem(Item newItem) {
+    final itemIndex = _items.indexWhere((item) {
+      return item.id == newItem.id;
+    });
+    setState(() {
+      if (itemIndex == -1) {
+        _items = [..._items, newItem];
+      } else {
+        _items[itemIndex] = newItem;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final tabValues = _Tab.values;
@@ -88,6 +101,10 @@ class _HomePageState extends State<HomePage> {
                       return EditDialog(
                         item: item,
                         onCancelClick: () {
+                          Navigator.of(context).pop();
+                        },
+                        onSaveClick: (Item newItem) {
+                          _onSaveUpdatedItem(newItem);
                           Navigator.of(context).pop();
                         },
                       );
