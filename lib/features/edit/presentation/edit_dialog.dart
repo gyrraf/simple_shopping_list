@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simple_shopping_list/core/theme/edit_dimensions.dart';
+import 'package:simple_shopping_list/core/utils/string_extensions.dart';
 import 'package:simple_shopping_list/features/home/data/item.dart';
 
 typedef SaveCallback = void Function(Item newItem);
@@ -37,7 +38,7 @@ class _EditDialogState extends State<EditDialog> {
       id: widget.item!.id, // FIXME: allow creation of completely new items.
       name: _nameInputController.text,
       purchaseNecessary: widget.item?.purchaseNecessary ?? false,
-      amountString: _amountInputController.text,
+      amountString: _amountInputController.text.maybeIfEmpty(() => null),
     );
     widget.onSaveClick(newItem);
   }
