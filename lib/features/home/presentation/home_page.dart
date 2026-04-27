@@ -4,8 +4,8 @@ import 'package:simple_shopping_list/features/home/data/item.dart';
 import 'package:simple_shopping_list/features/home/presentation/home_list.dart';
 
 enum _Tab {
-  todo(label: "Einkaufen"),
-  all(label: "Alle");
+  todo(label: "‼️Einkaufen‼️"),
+  all(label: "‼️Alle‼️");
 
   const _Tab({required this.label});
 
@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: _addItem,
-          tooltip: 'Add', // TODO: translate text
+          tooltip: '‼️Add‼️', // TODO: translate text
           child: const Icon(Icons.add),
         ),
       ),
