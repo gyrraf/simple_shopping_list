@@ -57,6 +57,25 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _showEditDialog(BuildContext context, Item? item) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return EditDialog(
+          item: item,
+          currentListSize: _items.length,
+          onCancelClick: () {
+            Navigator.of(context).pop();
+          },
+          onSaveClick: (Item newItem) {
+            _onSaveUpdatedItem(newItem);
+            Navigator.of(context).pop();
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final tabValues = _Tab.values;
@@ -79,44 +98,15 @@ class _HomePageState extends State<HomePage> {
                   key: Key("HomePageContent: ${tab.index}"),
                   allItems: _items,
                   selectedTab: tab,
-                  onItemClick: (int index, Item item) => showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return EditDialog(
-                        item: item,
-                        currentListSize: _items.length,
-                        onCancelClick: () {
-                          Navigator.of(context).pop();
-                        },
-                        onSaveClick: (Item newItem) {
-                          _onSaveUpdatedItem(newItem);
-                          Navigator.of(context).pop();
-                        },
-                      );
-                    },
-                  ),
+                  onItemClick: (int index, Item item) =>
+                      _showEditDialog(context, item),
                   onItemCheckedChanged: _onItemCheckedChanged,
                 ),
               )
               .toList(),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return EditDialog(
-                item: null,
-                currentListSize: _items.length,
-                onCancelClick: () {
-                  Navigator.of(context).pop();
-                },
-                onSaveClick: (Item newItem) {
-                  _onSaveUpdatedItem(newItem);
-                  Navigator.of(context).pop();
-                },
-              );
-            },
-          ),
+          onPressed: () => _showEditDialog(context, null),
           tooltip: '‼️Add‼️', // TODO: translate text
           child: const Icon(Icons.add),
         ),
