@@ -33,22 +33,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Item> _items = [];
 
-  void _addItem() {
-    // TODO: implement properly
-    final newId = _items.length + 1;
-    setState(() {
-      _items = [
-        ..._items,
-        (
-          id: newId,
-          name: "Item $newId",
-          amountString: "$newId pcs",
-          purchaseNecessary: true,
-        ),
-      ];
-    });
-  }
-
   void _onItemCheckedChanged(bool value, int index, Item item) {
     setState(() {
       _items[index] = (
@@ -100,6 +84,7 @@ class _HomePageState extends State<HomePage> {
                     builder: (BuildContext context) {
                       return EditDialog(
                         item: item,
+                        currentListSize: _items.length,
                         onCancelClick: () {
                           Navigator.of(context).pop();
                         },
@@ -116,7 +101,22 @@ class _HomePageState extends State<HomePage> {
               .toList(),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: _addItem,
+          onPressed: () => showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return EditDialog(
+                item: null,
+                currentListSize: _items.length,
+                onCancelClick: () {
+                  Navigator.of(context).pop();
+                },
+                onSaveClick: (Item newItem) {
+                  _onSaveUpdatedItem(newItem);
+                  Navigator.of(context).pop();
+                },
+              );
+            },
+          ),
           tooltip: '‼️Add‼️', // TODO: translate text
           child: const Icon(Icons.add),
         ),
