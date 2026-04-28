@@ -8,15 +8,16 @@ typedef SaveCallback = void Function(Item newItem);
 class EditDialog extends StatefulWidget {
   // TODO: maybe I should use a different type of variable for this?
   final Item? item;
-  final int
-  currentListSize; // TODO: remove again once a different way of generating the id is added.
+  final int itemId;
+  final VoidCallback? onRemoveClick;
   final VoidCallback onCancelClick;
   final SaveCallback onSaveClick;
 
   const EditDialog({
     super.key,
     this.item,
-    required this.currentListSize,
+    this.onRemoveClick,
+    required this.itemId,
     required this.onCancelClick,
     required this.onSaveClick,
   });
@@ -38,7 +39,7 @@ class _EditDialogState extends State<EditDialog> {
 
   void _saveClicked() {
     final newItem = (
-      id: widget.item?.id ?? (widget.currentListSize),
+      id: widget.itemId,
       name: _nameInputController.text,
       purchaseNecessary: widget.item?.purchaseNecessary ?? false,
       amountString: _amountInputController.text.maybeIfEmpty(() => null),
@@ -112,6 +113,11 @@ class _EditDialogState extends State<EditDialog> {
               mainAxisAlignment: MainAxisAlignment.end,
               spacing: dimensions.horizontalSpacingButtons,
               children: [
+                if (widget.onRemoveClick != null)
+                  TextButton(
+                    onPressed: widget.onRemoveClick,
+                    child: Text('‼️Remove‼️'), // TODO: translate text
+                  ),
                 TextButton(
                   onPressed: widget.onCancelClick,
                   child: Text('‼️Cancel‼️'), // TODO: translate text

@@ -32,6 +32,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Item> _items = [];
+  int nextId = 0;
 
   void _onItemCheckedChanged(bool value, int index, Item item) {
     setState(() {
@@ -51,9 +52,20 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       if (itemIndex == -1) {
         _items = [..._items, newItem];
+        nextId += 1;
       } else {
         _items[itemIndex] = newItem;
       }
+    });
+  }
+
+  void _onRemoveItem(Item existingItem) {
+    final itemIndex = _items.indexWhere((item) {
+      return item.id == existingItem.id;
+    });
+    if (itemIndex == -1) return;
+    setState(() {
+      _items.removeAt(itemIndex);
     });
   }
 
@@ -63,7 +75,13 @@ class _HomePageState extends State<HomePage> {
       builder: (BuildContext context) {
         return EditDialog(
           item: item,
-          currentListSize: _items.length,
+          itemId: item?.id ?? nextId,
+          onRemoveClick: item != null
+              ? () {
+                  _onRemoveItem(item);
+                  Navigator.of(context).pop();
+                }
+              : null,
           onCancelClick: () {
             Navigator.of(context).pop();
           },
