@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add a dialog for editing an existing item.
+- Add a dialog for creating or editing an item.
 
 ## [0.1.0] - 2026-03-21
 
