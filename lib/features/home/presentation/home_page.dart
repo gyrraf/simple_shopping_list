@@ -34,6 +34,8 @@ class _HomePageState extends State<HomePage> {
   final List<Item> _items = [];
   int nextId = 0;
 
+  int _indexOf(Item item) => _items.indexWhere((item2) => item2.id == item.id);
+
   void _onItemCheckedChanged(bool value, int index, Item item) {
     setState(() {
       _items[index] = (
@@ -46,9 +48,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onSaveUpdatedItem(Item newItem) {
-    final itemIndex = _items.indexWhere((item) {
-      return item.id == newItem.id;
-    });
+    final itemIndex = _indexOf(newItem);
     setState(() {
       if (itemIndex == -1) {
         _items.add(newItem);
