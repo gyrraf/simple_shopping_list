@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_shopping_list/core/theme/edit_dimensions.dart';
 import 'package:simple_shopping_list/core/utils/string_extensions.dart';
+import 'package:simple_shopping_list/core/utils/value.dart';
 import 'package:simple_shopping_list/features/home/data/item.dart';
 
 typedef SaveCallback = void Function(Item newItem);
@@ -38,12 +39,19 @@ class _EditDialogState extends State<EditDialog> {
   }
 
   void _saveClicked() {
-    final newItem = (
-      id: widget.itemId,
-      name: _nameInputController.text,
-      purchaseNecessary: widget.item?.purchaseNecessary ?? false,
-      amountString: _amountInputController.text.maybeIfEmpty(() => null),
-    );
+    final newItem =
+        widget.item?.copyWith(
+          name: _nameInputController.text,
+          amountString: Value(
+            _amountInputController.text.maybeIfEmpty(() => null),
+          ),
+        ) ??
+        Item(
+          id: widget.itemId,
+          name: _nameInputController.text,
+          purchaseNecessary: false,
+          amountString: _amountInputController.text.maybeIfEmpty(() => null),
+        );
     widget.onSaveClick(newItem);
   }
 

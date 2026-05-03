@@ -34,16 +34,12 @@ class _HomePageState extends State<HomePage> {
   final List<Item> _items = [];
   int nextId = 0;
 
-  int _indexOf(Item item) => _items.indexWhere((item2) => item2.id == item.id);
+  int _indexOf(Item item) =>
+      _items.indexWhere((item2) => item2.isSameItem(item));
 
   void _onItemCheckedChanged(bool value, int index, Item item) {
     setState(() {
-      _items[index] = (
-        id: item.id,
-        name: item.name,
-        amountString: item.amountString,
-        purchaseNecessary: value,
-      );
+      _items[index] = item.copyWith(purchaseNecessary: value);
     });
   }
 
@@ -61,7 +57,7 @@ class _HomePageState extends State<HomePage> {
 
   void _onRemoveItem(Item existingItem) {
     setState(() {
-      _items.removeWhere((item) => item.id == existingItem.id);
+      _items.removeWhere((item) => item.isSameItem(existingItem));
     });
   }
 
