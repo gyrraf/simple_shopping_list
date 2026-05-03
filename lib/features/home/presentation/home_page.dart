@@ -60,12 +60,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onRemoveItem(Item existingItem) {
-    final itemIndex = _items.indexWhere((item) {
-      return item.id == existingItem.id;
-    });
-    if (itemIndex == -1) return;
     setState(() {
-      _items.removeAt(itemIndex);
+      _items.removeWhere((item) => item.id == existingItem.id);
     });
   }
 
