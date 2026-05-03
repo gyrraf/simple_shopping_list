@@ -31,7 +31,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Item> _items = [];
+  final List<Item> _items = [];
   int nextId = 0;
 
   void _onItemCheckedChanged(bool value, int index, Item item) {
@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
     });
     setState(() {
       if (itemIndex == -1) {
-        _items = [..._items, newItem];
+        _items.add(newItem);
         nextId += 1;
       } else {
         _items[itemIndex] = newItem;
