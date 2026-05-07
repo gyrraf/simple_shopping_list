@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:simple_shopping_list/features/edit/presentation/edit_dialog.dart';
 import 'package:simple_shopping_list/features/home/data/item.dart';
 import 'package:simple_shopping_list/features/home/presentation/home_list.dart';
 
 enum _Tab {
-  todo(label: "Einkaufen"),
-  all(label: "Alle");
+  todo(label: "‼️Einkaufen‼️"),
+  all(label: "‼️Alle‼️");
 
   const _Tab({required this.label});
 
@@ -30,37 +31,59 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Item> _items = [];
+  final List<Item> _items = [];
+  int nextId = 0;
 
-  void _addItem() {
-    // TODO: implement properly
-    final newId = _items.length + 1;
-    setState(() {
-      _items = [
-        ..._items,
-        (
-          id: newId,
-          name: "Item $newId",
-          amountString: "$newId pcs",
-          purchaseNecessary: true,
-        ),
-      ];
-    });
-  }
-
-  void _onItemClick(int index, Item item) {
-    // TODO: implement
-  }
+  int _indexOf(Item item) =>
+      _items.indexWhere((item2) => item2.isSameItem(item));
 
   void _onItemCheckedChanged(bool value, int index, Item item) {
     setState(() {
-      _items[index] = (
-        id: item.id,
-        name: item.name,
-        amountString: item.amountString,
-        purchaseNecessary: value,
-      );
+      _items[index] = item.copyWith(purchaseNecessary: value);
     });
+  }
+
+  void _onSaveUpdatedItem(Item newItem) {
+    final itemIndex = _indexOf(newItem);
+    setState(() {
+      if (itemIndex == -1) {
+        _items.add(newItem);
+        nextId += 1;
+      } else {
+        _items[itemIndex] = newItem;
+      }
+    });
+  }
+
+  void _onRemoveItem(Item existingItem) {
+    setState(() {
+      _items.removeWhere((item) => item.isSameItem(existingItem));
+    });
+  }
+
+  void _showEditDialog(BuildContext context, Item? item) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return EditDialog(
+          item: item,
+          itemId: item?.id ?? nextId,
+          onRemoveClick: item != null
+              ? () {
+                  _onRemoveItem(item);
+                  Navigator.of(context).pop();
+                }
+              : null,
+          onCancelClick: () {
+            Navigator.of(context).pop();
+          },
+          onSaveClick: (Item newItem) {
+            _onSaveUpdatedItem(newItem);
+            Navigator.of(context).pop();
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -85,15 +108,16 @@ class _HomePageState extends State<HomePage> {
                   key: Key("HomePageContent: ${tab.index}"),
                   allItems: _items,
                   selectedTab: tab,
-                  onItemClick: _onItemClick,
+                  onItemClick: (int index, Item item) =>
+                      _showEditDialog(context, item),
                   onItemCheckedChanged: _onItemCheckedChanged,
                 ),
               )
               .toList(),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: _addItem,
-          tooltip: 'Add', // TODO: translate text
+          onPressed: () => _showEditDialog(context, null),
+          tooltip: '‼️Add‼️', // TODO: translate text
           child: const Icon(Icons.add),
         ),
       ),
