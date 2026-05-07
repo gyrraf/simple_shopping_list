@@ -3,6 +3,38 @@
 
   "appName": "Simple shopping list",
   "@appName": {
-    "description": "The application name"
+    "description": "The application name."
+  },
+  "general_saveButton": "Save",
+  "@general_saveButton": {
+    "description": "The text on a save button."
+  },
+  "general_cancelButton": "Cancel",
+  "@general_cancelButton": {
+    "description": "The text on a cancel button."
+  },
+  "general_addButton": "Add",
+  "@general_addButton": {
+    "description": "The text on an add button."
+  },
+  "general_removeButton": "Remove",
+  "@general_removeButton": {
+    "description": "The text on a remove button."
+  },
+  "overview_tab_todo": "Purchase",
+  "@overview_tab_todo": {
+    "description": "The text on the todo tab of the overview screen."
+  },
+  "overview_tab_all": "All",
+  "@overview_tab_all": {
+    "description": "The text on the all tab of the overview screen."
+  },
+  "editItem_nameLabel": "Name",
+  "@editItem_nameLabel": {
+    "description": "The label for the name text input field in the edit item UI."
+  },
+  "editItem_amountLabel": "Amount",
+  "@editItem_amountLabel": {
+    "description": "The label for the amount text input field in the edit item UI."
   }
 }

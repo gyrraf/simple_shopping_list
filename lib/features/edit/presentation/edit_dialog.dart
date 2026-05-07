@@ -3,6 +3,7 @@ import 'package:simple_shopping_list/core/theme/edit_dimensions.dart';
 import 'package:simple_shopping_list/core/utils/string_extensions.dart';
 import 'package:simple_shopping_list/core/utils/value.dart';
 import 'package:simple_shopping_list/features/home/data/item.dart';
+import 'package:simple_shopping_list/l10n/app_localizations.dart';
 
 typedef SaveCallback = void Function(Item newItem);
 
@@ -77,6 +78,7 @@ class _EditDialogState extends State<EditDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final dimensions = context.editDimensions;
 
     return Dialog(
@@ -94,7 +96,7 @@ class _EditDialogState extends State<EditDialog> {
                 TextField(
                   controller: _nameInputController,
                   decoration: InputDecoration(
-                    labelText: '‼️Name‼️', // TODO: translate text
+                    labelText: l10n.editItem_nameLabel,
                     enabled: true,
                   ),
                   keyboardType: TextInputType.text,
@@ -106,7 +108,7 @@ class _EditDialogState extends State<EditDialog> {
                 TextField(
                   controller: _amountInputController,
                   decoration: InputDecoration(
-                    labelText: '‼️Amount‼️', // TODO: translate text
+                    labelText: l10n.editItem_amountLabel,
                     enabled: true,
                   ),
                   keyboardType: TextInputType.text,
@@ -124,15 +126,15 @@ class _EditDialogState extends State<EditDialog> {
                 if (widget.onRemoveClick != null)
                   TextButton(
                     onPressed: widget.onRemoveClick,
-                    child: Text('‼️Remove‼️'), // TODO: translate text
+                    child: Text(l10n.general_removeButton),
                   ),
                 TextButton(
                   onPressed: widget.onCancelClick,
-                  child: Text('‼️Cancel‼️'), // TODO: translate text
+                  child: Text(l10n.general_cancelButton),
                 ),
                 TextButton(
                   onPressed: _isSaveEnabled ? _saveClicked : null,
-                  child: Text('‼️Save‼️'), // TODO: translate text
+                  child: Text(l10n.general_saveButton),
                 ),
               ],
             ),

@@ -5,12 +5,17 @@ import 'package:simple_shopping_list/features/home/presentation/home_list.dart';
 import 'package:simple_shopping_list/l10n/app_localizations.dart';
 
 enum _Tab {
-  todo(label: "‼️Einkaufen‼️"),
-  all(label: "‼️Alle‼️");
+  todo,
+  all;
 
-  const _Tab({required this.label});
-
-  final String label; // TODO: this label should be language dependent.
+  String getLabel(AppLocalizations l10n) {
+    switch (this) {
+      case todo:
+        return l10n.overview_tab_todo;
+      case all:
+        return l10n.overview_tab_all;
+    }
+  }
 
   bool isItemIncluded(Item item) {
     switch (this) {
@@ -98,7 +103,9 @@ class _HomePageState extends State<HomePage> {
           title: Text(l10n.appName),
           bottom: TabBar(
             indicatorSize: TabBarIndicatorSize.tab,
-            tabs: tabValues.map((tab) => Tab(text: tab.label)).toList(),
+            tabs: tabValues
+                .map((tab) => Tab(text: tab.getLabel(l10n)))
+                .toList(),
           ),
         ),
         body: TabBarView(
@@ -117,7 +124,7 @@ class _HomePageState extends State<HomePage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => _showEditDialog(context, null),
-          tooltip: '‼️Add‼️', // TODO: translate text
+          tooltip: l10n.general_addButton,
           child: const Icon(Icons.add),
         ),
       ),
