@@ -1,0 +1,13 @@
+{
+  "@@locale": "de",
+
+  "appName": "Simple Einkaufsliste",
+  "general_saveButton": "Speichern",
+  "general_cancelButton": "Abbrechen",
+  "general_addButton": "Hinzufügen",
+  "general_removeButton": "Entfernen",
+  "overview_tab_todo": "Einkaufen",
+  "overview_tab_all": "Alle",
+  "editItem_nameLabel": "Name",
+  "editItem_amountLabel": "Menge"
+}

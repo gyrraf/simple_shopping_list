@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:simple_shopping_list/features/edit/presentation/edit_dialog.dart';
 import 'package:simple_shopping_list/features/home/data/item.dart';
 import 'package:simple_shopping_list/features/home/presentation/home_list.dart';
+import 'package:simple_shopping_list/l10n/app_localizations.dart';
 
 enum _Tab {
-  todo(label: "‼️Einkaufen‼️"),
-  all(label: "‼️Alle‼️");
+  todo,
+  all;
 
-  const _Tab({required this.label});
-
-  final String label; // TODO: this label should be language dependent.
+  String getLabel(AppLocalizations l10n) {
+    switch (this) {
+      case todo:
+        return l10n.overview_tab_todo;
+      case all:
+        return l10n.overview_tab_all;
+    }
+  }
 
   bool isItemIncluded(Item item) {
     switch (this) {
@@ -22,9 +28,7 @@ enum _Tab {
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-
-  final String title;
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -88,6 +92,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final tabValues = _Tab.values;
 
     return DefaultTabController(
@@ -95,10 +100,12 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(widget.title),
+          title: Text(l10n.appName),
           bottom: TabBar(
             indicatorSize: TabBarIndicatorSize.tab,
-            tabs: tabValues.map((tab) => Tab(text: tab.label)).toList(),
+            tabs: tabValues
+                .map((tab) => Tab(text: tab.getLabel(l10n)))
+                .toList(),
           ),
         ),
         body: TabBarView(
@@ -117,7 +124,7 @@ class _HomePageState extends State<HomePage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => _showEditDialog(context, null),
-          tooltip: '‼️Add‼️', // TODO: translate text
+          tooltip: l10n.general_addButton,
           child: const Icon(Icons.add),
         ),
       ),
